@@ -1,5 +1,9 @@
+.gitignore
 Test_Data
 Training_Data
+Feature_Extract/feats
+Feature_Extract/__pycache__
+Feature_Extract/rdms
 .vscode
 Feature_Extract/feats
 Feature_Extract/rdms
