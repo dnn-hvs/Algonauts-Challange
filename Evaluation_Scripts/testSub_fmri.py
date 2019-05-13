@@ -82,11 +82,16 @@ def evaluate(submission, targets, target_names=['EVC_RDMs', 'IT_RDMs']):
 def test_fmri_submission():
     target_file = '../Training_Data/92_Image_Set/target_fmri.mat'
     # Sq-Net1_0
-    submit_file_dir = '../Feature_Extract/rdms/92images_rdms/sqnet1_0/pearson'
+    submit_file_dir = '../Feature_Extract/rdms/92images_rdms/' + \
+        sys.argv[1]+'/pearson'
     target = load(target_file)
-    results_file = open("sqnet1_0.txt", "w+")
+    results_file = open(sys.argv[1] + ".txt", "w+")
     # results_file = open("alexnet.txt", "w+")
     i = 0
+    results_file.write('=' * 20)
+    results_file.write('Start of test run')
+    results_file.write('=' * 20)
+
     for subdir, dirs, files in os.walk(submit_file_dir):
         if len(dirs) == 0 and len(files) != 0:
 
@@ -97,7 +102,6 @@ def test_fmri_submission():
 
             submit = load(file)
             print(file)
-            print(submit)
 
             out = evaluate(submit, target)
             evc_percentNC = ((out['EVC_RDMs'][0])/nc92_EVC_R2) * \
@@ -116,6 +120,58 @@ def test_fmri_submission():
             res_str = 'SCORE (average of the two correlations): {}'.format(
                 out['score']) + '  Percentage of noise ceiling: {}'.format(score_percentNC) + '%'+'\n'
             results_file.write(res_str)
+            results_file.write('=' * 20)
+    results_file.write('=' * 20)
+    results_file.write('End of test run')
+    results_file.write('=' * 20)
+
+
+# function that evaluates the RDM comparison.
+def test_fmri_submission():
+    target_file = '../Training_Data/92_Image_Set/target_fmri.mat'
+    # Sq-Net1_0
+    submit_file_dir = '../Feature_Extract/rdms/92images_rdms/' + \
+        sys.argv[1]+'/pearson'
+    target = load(target_file)
+    results_file = open(sys.argv[1] + ".txt", "w+")
+    # results_file = open("alexnet.txt", "w+")
+    i = 0
+    results_file.write('=' * 20)
+    results_file.write('Start of test run')
+    results_file.write('=' * 20)
+
+    for subdir, dirs, files in os.walk(submit_file_dir):
+        if len(dirs) == 0 and len(files) != 0:
+
+            print(subdir,  dirs, files)
+            file = subdir + '/submit_fmri.mat'
+            results_file.write('=' * 20)
+            results_file.write('\n{}'.format(file))
+
+            submit = load(file)
+            print(file)
+
+            out = evaluate(submit, target)
+            evc_percentNC = ((out['EVC_RDMs'][0])/nc92_EVC_R2) * \
+                100.  # evc percent of noise ceiling
+            it_percentNC = ((out['IT_RDMs'][0])/nc92_IT_R2) * \
+                100.  # it percent of noise ceiling
+            score_percentNC = ((out['score'])/nc92_avg_R2) * \
+                100.  # avg (score) percent of noise ceiling
+            results_file.write('\nfMRI results:\n')
+            res_str = 'Squared correlation of model to EVC (R**2): {}'.format(out['EVC_RDMs'][0]) + ' Percentage of noise ceiling: {}'.format(
+                evc_percentNC) + '%' + '  and significance: {}'.format(out['EVC_RDMs'][1])+'\n'
+            results_file.write(res_str)
+            res_str = 'Squared correlation of model to IT (R**2): {}'.format(out['IT_RDMs'][0]) + '  Percentage of noise ceiling: {}'.format(
+                it_percentNC) + '%' + '  and significance: {}'.format(out['IT_RDMs'][1])+'\n'
+            results_file.write(res_str)
+            res_str = 'SCORE (average of the two correlations): {}'.format(
+                out['score']) + '  Percentage of noise ceiling: {}'.format(score_percentNC) + '%'+'\n'
+            results_file.write(res_str)
+            results_file.write('=' * 20)
+    results_file.write('=' * 20)
+    results_file.write('End of test run')
+    results_file.write('=' * 20)
 
 
 if __name__ == '__main__':
