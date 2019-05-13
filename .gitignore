@@ -1,3 +1,6 @@
 Test_Data
 Training_Data
 .vscode
+Feature_Extract/feats
+Feature_Extract/rdms
+Feature_Extract/__pycache__
