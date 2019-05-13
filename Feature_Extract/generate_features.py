@@ -11,22 +11,12 @@ def generate_features(image_dir, save_dir, net):
     net_save_dir = os.path.join(feat_save_dir, net)
     if not os.path.exists(net_save_dir):
         os.makedirs(net_save_dir)
-
-    if net == "alexnet":
-        run_alexnet(image_dir, net_save_dir)
-    elif net == "vgg":
-        run_vgg(image_dir, net_save_dir)
-    elif net == "resnet":
-        run_resnet(image_dir, net_save_dir)
-    elif net == "sqnet1_0":
-        run_sqnet1_0(image_dir, net_save_dir)
-    else:
-        print("DNN not from list")
+    run_model(image_dir, net_save_dir, net)
 
 
 def main():
     # dnns list
-    dnns_list = ['alexnet', 'vgg', 'resnet', 'sqnet1_0']
+    dnns_list = ['alexnet', 'vgg', 'resnet', 'sqnet1_0', 'sqnet1_1', ]
 
     # ArgumentParser
     parser = argparse.ArgumentParser(

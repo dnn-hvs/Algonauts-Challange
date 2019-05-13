@@ -150,7 +150,7 @@ def zip(src, dst):
     zf.close()
 
 
-def run_sqnet1_0(image_dir, net_save_dir):
+def run_model(image_dir, net_save_dir, model_name):
     """
     This generates activations and saves in net_save_dir
     Input:
@@ -159,7 +159,17 @@ def run_sqnet1_0(image_dir, net_save_dir):
     Activations are saved in format XY.mat where XY is the image file
     XY.mat contains activations for specific layers in with corresponding layer's name
     """
-    model = SqueezeNet1_0()
+    if model_name == 'sqnet1_0':
+        model = SqueezeNet1_0()
+    elif model_name == 'sqnet1_1':
+        model = SqueezeNet1_1()
+    elif model_name == 'alexnet':
+        model = AlexNet()
+    elif model_name == 'vgg':
+        model = VGGNet()
+    elif model_name == 'resnet':
+        model = resnet50(pretrained=True)
+
     if torch.cuda.is_available():
         model.cuda()
     model.eval()
