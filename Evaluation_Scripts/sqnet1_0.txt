@@ -1,0 +1,34 @@
+====================
+../Feature_Extract/rdms/92images_rdms/sqnet1_0/pearson/maxpool1/submit_fmri.mat
+fMRI results:
+Squared correlation of model to EVC (R**2): 0.010268986250214485 Percentage of noise ceiling: 6.462546412973244%  and significance: 0.03435139415729102
+Squared correlation of model to IT (R**2): 0.005124010272482941  Percentage of noise ceiling: 1.666344804059493%  and significance: 0.009931080857840266
+SCORE (average of the two correlations): 0.007696498261348713  Percentage of noise ceiling: 3.3003851892575953%
+====================
+../Feature_Extract/rdms/92images_rdms/sqnet1_0/pearson/maxpool4/submit_fmri.mat
+fMRI results:
+Squared correlation of model to EVC (R**2): 0.03054114581865687 Percentage of noise ceiling: 19.220356084743152%  and significance: 0.00700214919053033
+Squared correlation of model to IT (R**2): 0.020653260123801205  Percentage of noise ceiling: 6.716507357333726%  and significance: 0.0011470319336301666
+SCORE (average of the two correlations): 0.025597202971229038  Percentage of noise ceiling: 10.97650213174487%
+====================
+
+../Feature_Extract/rdms/92images_rdms/sqnet1_0/pearson/maxpool8/submit_fmri.mat
+fMRI results:
+Squared correlation of model to EVC (R**2): 0.034817352160893544 Percentage of noise ceiling: 21.911486570732247%  and significance: 0.004794810378014769
+Squared correlation of model to IT (R**2): 0.044275157538034196  Percentage of noise ceiling: 14.398425215620877%  and significance: 0.0001342673672501257
+SCORE (average of the two correlations): 0.03954625484946387  Percentage of noise ceiling: 16.95808526992447%
+
+
+
+====================
+../Feature_Extract/rdms/92images_rdms/sqnet1_0/pearson/fire8/submit_fmri.mat
+fMRI results:
+Squared correlation of model to EVC (R**2): 0.030914049948042442 Percentage of noise ceiling: 19.455034580265853%  and significance: 0.011347263304163569
+Squared correlation of model to IT (R**2): 0.02995333357519438  Percentage of noise ceiling: 9.740921487868091%  and significance: 0.000604224722027667
+SCORE (average of the two correlations): 0.030433691761618413  Percentage of noise ceiling: 13.050468165359524%
+====================
+../Feature_Extract/rdms/92images_rdms/sqnet1_0/pearson/conv10/submit_fmri.mat
+fMRI results:
+Squared correlation of model to EVC (R**2): 0.03166928801974375 Percentage of noise ceiling: 19.930326003614695%  and significance: 0.010189964087706022
+Squared correlation of model to IT (R**2): 0.019051382423049157  Percentage of noise ceiling: 6.195571519690782%  and significance: 0.0019991243912273393
+SCORE (average of the two correlations): 0.025360335221396454  Percentage of noise ceiling: 10.874929340221463%
