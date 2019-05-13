@@ -120,11 +120,26 @@ class DenseNet(nn.Module):
                 nn.init.constant_(m.bias, 0)
 
     def forward(self, x):
-        features = self.features(x)
-        out = F.relu(features, inplace=True)
-        out = F.adaptive_avg_pool2d(out, (1, 1)).view(features.size(0), -1)
-        out = self.classifier(out)
-        return out
+        """Extract multiple feature maps."""
+        features = []
+        for name, layer in self.features._modules.items():
+            x = layer(x)
+            print(name)
+            if name[:-1] == 'denseblock':
+                features.append(x)
+
+        x = F.relu(x, inplace=True)
+        x = F.adaptive_avg_pool2d(x, (1, 1)).view(x.size(0), -1)
+        x = self.classifier(x)
+        features.append(x)
+        return features
+
+    # def forward(self, x):
+    #     features = self.features(x)
+    #     out = F.relu(features, inplace=True)
+    #     out = F.adaptive_avg_pool2d(out, (1, 1)).view(features.size(0), -1)
+    #     out = self.classifier(out)
+    #     return out
 
 
 def _load_state_dict(model, model_url, progress):
