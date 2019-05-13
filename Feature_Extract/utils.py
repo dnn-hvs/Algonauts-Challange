@@ -9,6 +9,7 @@ from resnet import *
 from alexnet import *
 from squeezenet import *
 from densenet import *
+from inceptionv3 import *
 from torch.autograd import Variable as V
 from tqdm import tqdm
 import torchvision.models as models
@@ -172,7 +173,9 @@ def run_model(image_dir, net_save_dir, model_name):
     elif model_name == 'resnet':
         model = resnet50(pretrained=True)
     elif model_name == 'densenet':
-        model = densenet201(pretrained=True)
+        model = densenet169(pretrained=True)
+    elif model_name == 'inception':
+        model = inception_v3(pretrained=True)
 
     if torch.cuda.is_available():
         model.cuda()
