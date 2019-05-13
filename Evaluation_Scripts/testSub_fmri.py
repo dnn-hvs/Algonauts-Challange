@@ -88,7 +88,6 @@ def test_fmri_submission_92():
     results_file = open(sys.argv[1] + ".txt", "a+")
     # results_file = open("alexnet.txt", "w+")
     i = 0
-    results_file.write('\n\n\n')
     results_file.write('=' * 20)
     results_file.write('Start of test run for 92 images')
     results_file.write('=' * 20)
@@ -138,7 +137,6 @@ def test_fmri_submission_118():
     results_file = open(sys.argv[1] + ".txt", "a+")
     # results_file = open("alexnet.txt", "w+")
     i = 0
-    results_file.write('\n\n\n')
     results_file.write('=' * 20)
     results_file.write('Start of test run for 118 images')
     results_file.write('=' * 20)
