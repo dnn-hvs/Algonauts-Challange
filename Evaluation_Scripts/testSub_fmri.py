@@ -82,49 +82,40 @@ def evaluate(submission, targets, target_names=['EVC_RDMs', 'IT_RDMs']):
 def test_fmri_submission():
     target_file = '../Training_Data/92_Image_Set/target_fmri.mat'
     # Sq-Net1_0
-    # submit_file = ['../Feature_Extract/rdms/92images_rdms/sqnet1_0/pearson/maxpool1/submit_fmri.mat',
-    #                '../Feature_Extract/rdms/92images_rdms/sqnet1_0/pearson/maxpool4/submit_fmri.mat',
-    #                '../Feature_Extract/rdms/92images_rdms/sqnet1_0/pearson/maxpool8/submit_fmri.mat',
-    #                '../Feature_Extract/rdms/92images_rdms/sqnet1_0/pearson/fire8/submit_fmri.mat',
-    #                '../Feature_Extract/rdms/92images_rdms/sqnet1_0/pearson/conv10/submit_fmri.mat',
-    #                ]
-    submit_file = [
-        '../Feature_Extract/rdms/92images_rdms/alexnet/pearson/conv1/submit_fmri.mat',
-        '../Feature_Extract/rdms/92images_rdms/alexnet/pearson/conv2/submit_fmri.mat',
-        '../Feature_Extract/rdms/92images_rdms/alexnet/pearson/conv3/submit_fmri.mat',
-        '../Feature_Extract/rdms/92images_rdms/alexnet/pearson/conv4/submit_fmri.mat',
-        '../Feature_Extract/rdms/92images_rdms/alexnet/pearson/conv5/submit_fmri.mat',
-        '../Feature_Extract/rdms/92images_rdms/alexnet/pearson/fc6/submit_fmri.mat',
-        '../Feature_Extract/rdms/92images_rdms/alexnet/pearson/fc7/submit_fmri.mat',
-        '../Feature_Extract/rdms/92images_rdms/alexnet/pearson/fc8/submit_fmri.mat',
-
-    ]
+    submit_file_dir = '../Feature_Extract/rdms/92images_rdms/sqnet1_0/pearson'
     target = load(target_file)
-    # results_file = open("sqnet1_0.txt", "w+")
-    results_file = open("alexnet.txt", "w+")
+    results_file = open("sqnet1_0.txt", "w+")
+    # results_file = open("alexnet.txt", "w+")
+    i = 0
+    for subdir, dirs, files in os.walk(submit_file_dir):
+        if len(dirs) == 0 and len(files) != 0:
 
-    for file in submit_file:
-        results_file.write('=' * 20)
-        results_file.write('\n{}'.format(file))
+            print(subdir,  dirs, files)
+            file = subdir + '/submit_fmri.mat'
+            results_file.write('=' * 20)
+            results_file.write('\n{}'.format(file))
 
-        submit = load(file)
-        out = evaluate(submit, target)
-        evc_percentNC = ((out['EVC_RDMs'][0])/nc92_EVC_R2) * \
-            100.  # evc percent of noise ceiling
-        it_percentNC = ((out['IT_RDMs'][0])/nc92_IT_R2) * \
-            100.  # it percent of noise ceiling
-        score_percentNC = ((out['score'])/nc92_avg_R2) * \
-            100.  # avg (score) percent of noise ceiling
-        results_file.write('\nfMRI results:\n')
-        res_str = 'Squared correlation of model to EVC (R**2): {}'.format(out['EVC_RDMs'][0]) + ' Percentage of noise ceiling: {}'.format(
-            evc_percentNC) + '%' + '  and significance: {}'.format(out['EVC_RDMs'][1])+'\n'
-        results_file.write(res_str)
-        res_str = 'Squared correlation of model to IT (R**2): {}'.format(out['IT_RDMs'][0]) + '  Percentage of noise ceiling: {}'.format(
-            it_percentNC) + '%' + '  and significance: {}'.format(out['IT_RDMs'][1])+'\n'
-        results_file.write(res_str)
-        res_str = 'SCORE (average of the two correlations): {}'.format(
-            out['score']) + '  Percentage of noise ceiling: {}'.format(score_percentNC) + '%'+'\n'
-        results_file.write(res_str)
+            submit = load(file)
+            print(file)
+            print(submit)
+
+            out = evaluate(submit, target)
+            evc_percentNC = ((out['EVC_RDMs'][0])/nc92_EVC_R2) * \
+                100.  # evc percent of noise ceiling
+            it_percentNC = ((out['IT_RDMs'][0])/nc92_IT_R2) * \
+                100.  # it percent of noise ceiling
+            score_percentNC = ((out['score'])/nc92_avg_R2) * \
+                100.  # avg (score) percent of noise ceiling
+            results_file.write('\nfMRI results:\n')
+            res_str = 'Squared correlation of model to EVC (R**2): {}'.format(out['EVC_RDMs'][0]) + ' Percentage of noise ceiling: {}'.format(
+                evc_percentNC) + '%' + '  and significance: {}'.format(out['EVC_RDMs'][1])+'\n'
+            results_file.write(res_str)
+            res_str = 'Squared correlation of model to IT (R**2): {}'.format(out['IT_RDMs'][0]) + '  Percentage of noise ceiling: {}'.format(
+                it_percentNC) + '%' + '  and significance: {}'.format(out['IT_RDMs'][1])+'\n'
+            results_file.write(res_str)
+            res_str = 'SCORE (average of the two correlations): {}'.format(
+                out['score']) + '  Percentage of noise ceiling: {}'.format(score_percentNC) + '%'+'\n'
+            results_file.write(res_str)
 
 
 if __name__ == '__main__':
