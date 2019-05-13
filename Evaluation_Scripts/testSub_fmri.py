@@ -177,9 +177,9 @@ def test_fmri_submission_118():
 
 
 if __name__ == '__main__':
+    if len(sys.argv) != 3:
+        print('Argument error: Pass network and the image set\nEx: python3 testSub_fmri.py alexnet 118')
     if sys.argv[2] == '92':
         test_fmri_submission_92()
     elif sys.argv[2] == '118':
         test_fmri_submission_118()
-    else:
-        print('You gotta tell me whcih image set to look at -_-')
