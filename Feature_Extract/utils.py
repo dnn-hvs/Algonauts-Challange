@@ -8,6 +8,7 @@ from vgg import *
 from resnet import *
 from alexnet import *
 from squeezenet import *
+from densenet import *
 from torch.autograd import Variable as V
 from tqdm import tqdm
 import torchvision.models as models
@@ -107,6 +108,7 @@ def run_resnet(image_dir, net_save_dir):
     XY.mat contains activations for specific layers in with corresponding layer's name
     """
     model = resnet50(pretrained=True)
+    print(model.feat_list)
     if torch.cuda.is_available():
         model.cuda()
     model.eval()
@@ -169,6 +171,8 @@ def run_model(image_dir, net_save_dir, model_name):
         model = VGGNet()
     elif model_name == 'resnet':
         model = resnet50(pretrained=True)
+    elif model_name == 'densenet':
+        model = densenet201(pretrained=True)
 
     if torch.cuda.is_available():
         model.cuda()
@@ -198,3 +202,4 @@ def run_model(image_dir, net_save_dir, model_name):
             print(feat.data.cpu().numpy().shape)
             feats[model.feat_list[i]] = feat.data.cpu().numpy()
         sio.savemat(save_path, feats)
+    print(str(feats.keys()))

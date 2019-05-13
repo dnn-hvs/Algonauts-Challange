@@ -16,7 +16,8 @@ def generate_features(image_dir, save_dir, net):
 
 def main():
     # dnns list
-    dnns_list = ['alexnet', 'vgg', 'resnet', 'sqnet1_0', 'sqnet1_1', ]
+    dnns_list = ['alexnet', 'vgg', 'resnet',
+                 'sqnet1_0', 'sqnet1_1', 'densenet']
 
     # ArgumentParser
     parser = argparse.ArgumentParser(

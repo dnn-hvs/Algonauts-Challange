@@ -116,7 +116,8 @@ class ResNet(nn.Module):
 
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
-                nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
+                nn.init.kaiming_normal_(
+                    m.weight, mode='fan_out', nonlinearity='relu')
             elif isinstance(m, nn.BatchNorm2d):
                 nn.init.constant_(m.weight, 1)
                 nn.init.constant_(m.bias, 0)
@@ -153,7 +154,7 @@ class ResNet(nn.Module):
         x = self.relu(x)
         x = self.maxpool(x)
 
-        x1= self.layer1(x)
+        x1 = self.layer1(x)
         x2 = self.layer2(x1)
         x3 = self.layer3(x2)
         x4 = self.layer4(x3)
@@ -162,7 +163,7 @@ class ResNet(nn.Module):
         x = x.view(x.size(0), -1)
         x5 = self.fc(x)
 
-        return x1,x2,x3,x4,x5
+        return x1, x2, x3, x4, x5
 
 
 def resnet18(pretrained=False, **kwargs):
