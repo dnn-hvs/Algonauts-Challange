@@ -169,7 +169,7 @@ def run_model(image_dir, net_save_dir, model_name):
     elif model_name == 'alexnet':
         model = AlexNet()
     elif model_name == 'vgg':
-        model = VGGNet()
+        model = vgg19(pretrained=True)
     elif model_name == 'resnet':
         model = resnet50(pretrained=True)
     elif model_name == 'densenet':
