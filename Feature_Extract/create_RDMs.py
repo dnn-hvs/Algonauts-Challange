@@ -130,18 +130,21 @@ def create_rdm(save_dir, feat_dir, dist):
         sio.savemat(RDM_filename_meg, rdm_meg)
 
         # creating zipped file for submission
-        zipfmri = zipfile.ZipFile(RDM_filename_fmri_zip, 'w')
-        zipmeg = zipfile.ZipFile(RDM_filename_meg_zip, 'w')
-        os.chdir(RDM_dir)
-        zipfmri.write('submit_fmri.mat')
-        zipmeg.write('submit_meg.mat')
-        zipfmri.close()
-        zipmeg.close()
+        # zipfmri = zipfile.ZipFile(RDM_filename_fmri_zip, 'w')
+        # zipmeg = zipfile.ZipFile(RDM_filename_meg_zip, 'w')
+        # os.chdir(RDM_dir)
+        # zipfmri.write('submit_fmri.mat')
+        # zipmeg.write('submit_meg.mat')
+        # zipfmri.close()
+        # zipmeg.close()
 
 
 def main():
 
     RDM_distance_choice = ['pearson']
+    # dnns list
+    dnns_list = ['alexnet', 'vgg', 'resnet50',
+                 'sqnet1_0', 'sqnet1_1', 'densenet201', 'googlenet', 'all']
 
     parser = argparse.ArgumentParser(
         description='Creates RDM from DNN activations')
@@ -151,6 +154,8 @@ def main():
         '-sd', '--save_dir', help='RDM save directory path', default="./rdms/vgg", type=str)
     parser.add_argument('-d', '--distance', help='distance for RDMs',
                         default="pearson", choices=RDM_distance_choice)
+    parser.add_argument('-n', '--net', help='DNN Choice',
+                        default="all", choices=dnns_list)
     args = vars(parser.parse_args())
 
     # creates save_dir
@@ -165,9 +170,18 @@ def main():
 
     feat_dir = args['feat_dir']
     dist = args['distance']
+    net = args['net']
 
-    # RDM function
-    create_rdm(save_dir, feat_dir, dist)
+    if net != 'all':
+        create_rdm(os.path.join(save_dir, net),
+                   os.path.join(feat_dir, net), dist)
+        return
+
+    for subdir, dirs, files in os.walk(feat_dir):
+        if len(dirs) == 0 and len(files) != 0:
+            net = subdir.split('/')[-1]
+            print("==============Creating RDMS for ", net, "==============")
+            create_rdm(os.path.join(save_dir, net), subdir, dist)
 
 
 if __name__ == "__main__":

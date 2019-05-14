@@ -35,7 +35,6 @@ class AlexNet(nn.Module):
         features = []
         for name, layer in self.alex_feats._modules.items():
             x = layer(x)
-            print(name)
             if alex_feat_list[int(name)] in self.feat_list:
                 features.append(x)
 
@@ -44,7 +43,6 @@ class AlexNet(nn.Module):
 
         for name, layer in self.alex_classifier._modules.items():
             x = layer(x)
-            print(name)
             if alex_classifier_list[int(name)] in self.feat_list:
                 features.append(x)
         return features

@@ -8,7 +8,11 @@ def generate_features(image_dir, save_dir, net):
 
     image_dir_name = image_dir.split("/")[-1]
     feat_save_dir = os.path.join(save_dir, image_dir_name+"_feats")
-    net_save_dir = os.path.join(feat_save_dir, net)
+    if net != 'all':
+        net_save_dir = os.path.join(feat_save_dir, net)
+    else:
+        net_save_dir = feat_save_dir
+
     if not os.path.exists(net_save_dir):
         os.makedirs(net_save_dir)
     run_model(image_dir, net_save_dir, net)
@@ -16,8 +20,8 @@ def generate_features(image_dir, save_dir, net):
 
 def main():
     # dnns list
-    dnns_list = ['alexnet', 'vgg', 'resnet',
-                 'sqnet1_0', 'sqnet1_1', 'densenet', 'inception']
+    dnns_list = ['alexnet', 'vgg', 'resnet50',
+                 'sqnet1_0', 'sqnet1_1', 'densenet201', 'googlenet', 'inception', 'all']
 
     # ArgumentParser
     parser = argparse.ArgumentParser(
