@@ -1,0 +1,90 @@
+====================Start of test run for 118 images========================================
+Layer: fc
+fMRI results:
+Squared correlation of model to EVC (R**2): 0.0012504281970535465 Percentage of noise ceiling: 1.1931566765778117%  and significance: 0.011203666788413684
+Squared correlation of model to IT (R**2): 0.0014217770589135834  Percentage of noise ceiling: 1.9529904655406365%  and significance: 0.02522589060706707
+SCORE (average of the two correlations): 0.001336102627983565  Percentage of noise ceiling: 1.5046200765580684%
+========================================End of test run====================
+
+
+====================Start of test run for 118 images========================================
+Layer: denseblock2
+fMRI results:
+Squared correlation of model to EVC (R**2): 0.0027723119489858282 Percentage of noise ceiling: 2.6453358291849507%  and significance: 0.0024830424489801785
+Squared correlation of model to IT (R**2): 0.0017034386442429917  Percentage of noise ceiling: 2.339888247586527%  and significance: 0.05004895145918859
+SCORE (average of the two correlations): 0.00223787529661441  Percentage of noise ceiling: 2.520129838529741%
+========================================End of test run====================
+
+
+====================Start of test run for 118 images========================================
+Layer: denseblock1
+fMRI results:
+Squared correlation of model to EVC (R**2): 0.01966417933901689 Percentage of noise ceiling: 18.76352990364207%  and significance: 0.013452867642387739
+Squared correlation of model to IT (R**2): 0.005633463369082255  Percentage of noise ceiling: 7.738273858629471%  and significance: 0.036681544809107146
+SCORE (average of the two correlations): 0.012648821354049574  Percentage of noise ceiling: 14.244168191497266%
+========================================End of test run====================
+
+
+====================Start of test run for 118 images========================================
+Layer: denseblock3
+fMRI results:
+Squared correlation of model to EVC (R**2): 0.001276865918906394 Percentage of noise ceiling: 1.2183835104068645%  and significance: 0.01595000573809267
+Squared correlation of model to IT (R**2): 0.0021731058343696804  Percentage of noise ceiling: 2.985035486771539%  and significance: 0.032598228046283685
+SCORE (average of the two correlations): 0.0017249858766380372  Percentage of noise ceiling: 1.9425516628806725%
+========================================End of test run====================
+
+
+====================Start of test run for 118 images========================================
+Layer: denseblock4
+fMRI results:
+Squared correlation of model to EVC (R**2): 0.00156817657998518 Percentage of noise ceiling: 1.4963516984591412%  and significance: 0.039087785108801204
+Squared correlation of model to IT (R**2): 0.001794325111056909  Percentage of noise ceiling: 2.464732295407842%  and significance: 0.024550445069948187
+SCORE (average of the two correlations): 0.0016812508455210445  Percentage of noise ceiling: 1.8933005017128877%
+========================================End of test run====================
+
+
+====================Start of test run for 92 images========================================
+Layer: fc
+fMRI results:
+Squared correlation of model to EVC (R**2): 0.004938003616552745 Percentage of noise ceiling: 3.107617128101161%  and significance: 0.013091242435699828
+Squared correlation of model to IT (R**2): 0.006793057747073615  Percentage of noise ceiling: 2.2091244705930455%  and significance: 0.006052142384556992
+SCORE (average of the two correlations): 0.00586553068181318  Percentage of noise ceiling: 2.515236141429322%
+========================================End of test run====================
+
+
+====================Start of test run for 92 images========================================
+Layer: denseblock2
+fMRI results:
+Squared correlation of model to EVC (R**2): 0.010324093018140652 Percentage of noise ceiling: 6.497226568999779%  and significance: 0.015740344167225438
+Squared correlation of model to IT (R**2): 0.006596256503828383  Percentage of noise ceiling: 2.145124066285653%  and significance: 0.009013908242432823
+SCORE (average of the two correlations): 0.008460174760984518  Percentage of noise ceiling: 3.627862247420462%
+========================================End of test run====================
+
+
+====================Start of test run for 92 images========================================
+Layer: denseblock1
+fMRI results:
+Squared correlation of model to EVC (R**2): 0.0221161260509734 Percentage of noise ceiling: 13.918266866566015%  and significance: 0.0038551089065687084
+Squared correlation of model to IT (R**2): 0.005351995138867405  Percentage of noise ceiling: 1.7404862240219203%  and significance: 0.005611673767642953
+SCORE (average of the two correlations): 0.013734060594920402  Percentage of noise ceiling: 5.88939133572916%
+========================================End of test run====================
+
+
+====================Start of test run for 92 images========================================
+Layer: denseblock3
+fMRI results:
+Squared correlation of model to EVC (R**2): 0.014685144948265913 Percentage of noise ceiling: 9.241752642080497%  and significance: 0.009224715186262495
+Squared correlation of model to IT (R**2): 0.006892167029556339  Percentage of noise ceiling: 2.2413551315630373%  and significance: 0.0013797907535074469
+SCORE (average of the two correlations): 0.010788655988911126  Percentage of noise ceiling: 4.626353340013347%
+========================================End of test run====================
+
+
+====================Start of test run for 92 images========================================
+Layer: denseblock4
+fMRI results:
+Squared correlation of model to EVC (R**2): 0.008348239992397002 Percentage of noise ceiling: 5.253769661672122%  and significance: 0.0028199473258814977
+Squared correlation of model to IT (R**2): 0.015469602374314505  Percentage of noise ceiling: 5.030764999777075%  and significance: 0.000240087673605628
+SCORE (average of the two correlations): 0.011908921183355754  Percentage of noise ceiling: 5.106741502296635%
+========================================End of test run====================
+
+
