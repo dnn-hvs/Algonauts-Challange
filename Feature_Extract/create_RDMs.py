@@ -149,9 +149,9 @@ def main():
     parser = argparse.ArgumentParser(
         description='Creates RDM from DNN activations')
     parser.add_argument(
-        '-fd', '--feat_dir', help='feature directory path', default="./feats/vgg", type=str)
+        '-fd', '--feat_dir', help='feature directory path', default="./feats", type=str)
     parser.add_argument(
-        '-sd', '--save_dir', help='RDM save directory path', default="./rdms/vgg", type=str)
+        '-sd', '--save_dir', help='RDM save directory path', default="./rdms", type=str)
     parser.add_argument('-d', '--distance', help='distance for RDMs',
                         default="pearson", choices=RDM_distance_choice)
     parser.add_argument('-n', '--net', help='DNN Choice',
@@ -180,7 +180,8 @@ def main():
     for subdir, dirs, files in os.walk(feat_dir):
         if len(dirs) == 0 and len(files) != 0:
             net = subdir.split('/')[-1]
-            print("==============Creating RDMS for ", net, "==============")
+            print()
+            print("==============Creating RDMs for ", net, "==============")
             create_rdm(os.path.join(save_dir, net), subdir, dist)
 
 

@@ -23,13 +23,23 @@ from PIL import Image
 
 models = {
     'alexnet': AlexNet(),
-    'vgg': VGGNet(),
+    'vgg11': vgg11(pretrained=True),
+    'vgg13': vgg13(pretrained=True),
+    'vgg16': vgg16(pretrained=True),
+    'vgg19': vgg19(pretrained=True),
     'sqnet1_0': SqueezeNet1_0(),
     'sqnet1_1': SqueezeNet1_1(),
+    'resnet18': resnet18(pretrained=True),
+    'resnet34': resnet34(pretrained=True),
     'resnet50': resnet50(pretrained=True),
+    'resnet101': resnet101(pretrained=True),
+    'resnet152': resnet152(pretrained=True),
+    'densenet121': densenet121(pretrained=True),
+    'densenet161': densenet161(pretrained=True),
+    'densenet169': densenet169(pretrained=True),
     'densenet201': densenet201(pretrained=True),
     'googlenet': googlenet(pretrained=True),
-
+    'inception': inception_v3(pretrained=True)
 }
 
 

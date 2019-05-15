@@ -31,7 +31,7 @@ def main():
     parser.add_argument('-sd', '--save_dir',
                         help='save directory path', default="./feats", type=str)
     parser.add_argument("--net", help='DNN choice',
-                        default="vgg", choices=dnns_list)
+                        default="all", choices=dnns_list)
     args = vars(parser.parse_args())
 
     image_dir = args['image_dir']

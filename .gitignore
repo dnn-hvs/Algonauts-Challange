@@ -5,6 +5,6 @@ Feature_Extract/feats
 Feature_Extract/__pycache__
 Feature_Extract/rdms
 .vscode
-Feature_Extract/feats
-Feature_Extract/rdms
+feats
+rdms
 Feature_Extract/__pycache__

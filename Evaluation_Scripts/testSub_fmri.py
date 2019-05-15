@@ -79,13 +79,10 @@ def evaluate(submission, targets, target_names=['EVC_RDMs', 'IT_RDMs']):
 
 
 # function that evaluates the RDM comparison.
-def test_fmri_submission_92():
+def test_fmri_submission_92(submit_file_dir, results_file_name):
     target_file = '../Training_Data/92_Image_Set/target_fmri.mat'
-    # Sq-Net1_0
-    submit_file_dir = '../Feature_Extract/rdms/92images_rdms/' + \
-        sys.argv[1]+'/pearson'
     target = load(target_file)
-    results_file = open(sys.argv[1] + ".txt", "a+")
+    results_file = open(results_file_name + ".txt", "a+")
     # results_file = open("alexnet.txt", "w+")
     i = 0
     results_file.write('=' * 20)
@@ -98,7 +95,7 @@ def test_fmri_submission_92():
             print(subdir,  dirs, files)
             file = subdir + '/submit_fmri.mat'
             results_file.write('=' * 20)
-            results_file.write('\n{}'.format(file))
+            results_file.write('\nLayer: {}'.format(file.split('/')[-2]))
 
             submit = load(file)
             print(file)
@@ -128,13 +125,10 @@ def test_fmri_submission_92():
 
 
 # function that evaluates the RDM comparison.
-def test_fmri_submission_118():
+def test_fmri_submission_118(submit_file_dir, results_file_name):
     target_file = '../Training_Data/118_Image_Set/target_fmri.mat'
-    # Sq-Net1_0
-    submit_file_dir = '../Feature_Extract/rdms/118images_rdms/' + \
-        sys.argv[1]+'/pearson'
     target = load(target_file)
-    results_file = open(sys.argv[1] + ".txt", "a+")
+    results_file = open(results_file_name + ".txt", "a+")
     # results_file = open("alexnet.txt", "w+")
     i = 0
     results_file.write('=' * 20)
@@ -147,7 +141,7 @@ def test_fmri_submission_118():
             print(subdir,  dirs, files)
             file = subdir + '/submit_fmri.mat'
             results_file.write('=' * 20)
-            results_file.write('\n{}'.format(file))
+            results_file.write('\nLayer: {}'.format(file.split('/')[-2]))
 
             submit = load(file)
             print(file)
@@ -177,9 +171,13 @@ def test_fmri_submission_118():
 
 
 if __name__ == '__main__':
-    if len(sys.argv) != 3:
-        print('Argument error: Pass network and the image set\nEx: python3 testSub_fmri.py alexnet 118')
-    if sys.argv[2] == '92':
-        test_fmri_submission_92()
-    elif sys.argv[2] == '118':
-        test_fmri_submission_118()
+    for subdir, dirs, files in os.walk(sys.argv[1] + '/118images_rdms/pearson'):
+        if len(dirs) == 0 and len(files) != 0:
+            net = subdir.split('/')[-1]
+            test_fmri_submission_118(subdir, net)
+    for subdir, dirs, files in os.walk(sys.argv[1] + '/92images_rdms/pearson'):
+        if len(dirs) == 0 and len(files) != 0:
+            net = subdir.split('/')[-1]
+            test_fmri_submission_118(subdir, net)
+
+    print(sys.argv[1] + '/118images_rdms/pearson')
