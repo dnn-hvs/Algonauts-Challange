@@ -28,12 +28,12 @@ printf "${GREEN}OK:${NC} Features created for 92 image set\n"
 # Create RDMs
 clear
 printf "${BLUE}Info:${NC} Creating RDMs for 118 image set\n"
-python3 create_RDMs.py --feat_dir "./feats/118images_feats" --save-dir './rdms/118images_rdms'
+python3 create_RDMs.py --feat_dir "./feats/118images_feats" --save_dir './rdms/118images_rdms'
 printf "${GREEN}OK:${NC} RDMs created for 118 image set\n"
 
 clear
 printf "${BLUE}Info:${NC} Creating RDMs for 92 image set\n"
-python3 create_RDMs.py --feat_dir "./feats/92images_feats" --save-dir './rdms/92images_rdms'
+python3 create_RDMs.py --feat_dir "./feats/92images_feats" --save_dir './rdms/92images_rdms'
 printf "${GREEN}OK:${NC} RDMs created for 92 image set\n"
 
 # Test for goodness
@@ -41,4 +41,9 @@ clear
 cd ../Evaluation_Scripts
 printf "${BLUE}Info:${NC} Let the games begin\n"
 python3 testSub_fmri.py ../Feature_Extract/rdms
+
+# Move the results into a directory
+if [ ! -d "Results" ]; then mkdir Results; fi
+mv *.txt Results
+mv Results/ReadMe_evaluation.txt .
 printf "${GREEN}OK:${NC} All done; hopefully\n\n\n"
