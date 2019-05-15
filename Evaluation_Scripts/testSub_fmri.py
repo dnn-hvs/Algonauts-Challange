@@ -141,6 +141,7 @@ def test_fmri_submission_118(submit_file_dir, results_file_name):
             print(subdir,  dirs, files)
             file = subdir + '/submit_fmri.mat'
             results_file.write('=' * 20)
+            print(file.split('/')[-3])
             results_file.write('\nLayer: {}'.format(file.split('/')[-2]))
 
             submit = load(file)
@@ -173,11 +174,11 @@ def test_fmri_submission_118(submit_file_dir, results_file_name):
 if __name__ == '__main__':
     for subdir, dirs, files in os.walk(sys.argv[1] + '/118images_rdms/pearson'):
         if len(dirs) == 0 and len(files) != 0:
-            net = subdir.split('/')[-1]
+            net = subdir.split('/')[-2]
             test_fmri_submission_118(subdir, net)
     for subdir, dirs, files in os.walk(sys.argv[1] + '/92images_rdms/pearson'):
         if len(dirs) == 0 and len(files) != 0:
-            net = subdir.split('/')[-1]
-            test_fmri_submission_118(subdir, net)
+            net = subdir.split('/')[-2]
+            test_fmri_submission_92(subdir, net)
 
     print(sys.argv[1] + '/118images_rdms/pearson')
