@@ -12,7 +12,7 @@ def loadmat(matfile):
         return {name: np.transpose(f.get(name)) for name in f.keys()}
 
 
-target_file = '../Training_Data/92_Image_Set/target_fmri.mat'
+target_file = r'./92/target_fmri.mat'
 target = loadmat(target_file)
 print(target['EVC_RDMs'][0])
 print('Seperation')
