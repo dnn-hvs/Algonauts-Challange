@@ -24,8 +24,8 @@ from PIL import Image
 models = {
     'alex1': AlexNet(),
     'alex2': AlexNet(),
-    'vgg1': vgg19(),
-    'vgg2': vgg19(),
+    'vgg1': vgg16(),
+    'vgg2': vgg16(),
     'alexnet': AlexNet(),
     'vgg11': vgg11(pretrained=True),
     'vgg13': vgg13(pretrained=True),
