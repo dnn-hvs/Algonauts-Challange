@@ -22,6 +22,10 @@ import os
 from PIL import Image
 
 models = {
+    'alex1': AlexNet(),
+    'alex2': AlexNet(),
+    'vgg1': vgg19(),
+    'vgg2': vgg19(),
     'alexnet': AlexNet(),
     'vgg11': vgg11(pretrained=True),
     'vgg13': vgg13(pretrained=True),
@@ -88,7 +92,7 @@ def execute_model(image_dir, net_save_dir, model):
     print(str(feats.keys()))
 
 
-def run_model(image_dir, net_save_dir, model_name):
+def run_model(image_dir, net_save_dir, model_name, model_path):
     """
     This generates activations and saves in net_save_dir
     Input:
@@ -106,4 +110,7 @@ def run_model(image_dir, net_save_dir, model_name):
             execute_model(image_dir, model_save_dir, models[model])
             print("================End of Model : ", model, "================")
     else:
-        execute_model(image_dir, net_save_dir, models[model_name])
+        model = models[model_name]
+        checkpoint = torch.load(model_path)
+        model.load_state_dict(checkpoint['state_dict'])
+        execute_model(image_dir, net_save_dir, model)
