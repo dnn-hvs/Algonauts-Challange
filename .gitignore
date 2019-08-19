@@ -1,4 +1,3 @@
-.gitignore
 Test_Data
 Training_Data
 Feature_Extract/feats
@@ -8,3 +7,4 @@ Feature_Extract/rdms
 feats
 rdms
 Feature_Extract/__pycache__
+models
