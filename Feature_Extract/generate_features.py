@@ -4,12 +4,12 @@ import os
 from utils import *
 
 
-def generate_features(image_dir, save_dir, net, path):
+def generate_features(image_dir, save_dir, net, path, exp_name):
 
     image_dir_name = image_dir.split("/")[-1]
     feat_save_dir = os.path.join(save_dir, image_dir_name+"_feats")
     if net != 'all':
-        net_save_dir = os.path.join(feat_save_dir, net)
+        net_save_dir = os.path.join(feat_save_dir, exp_name)
     else:
         net_save_dir = feat_save_dir
 
@@ -20,7 +20,7 @@ def generate_features(image_dir, save_dir, net, path):
 
 def main():
     # dnns list
-    dnns_list = ['alexnet', 'vgg', 'resnet50',
+    dnns_list = ['alexnet', 'vgg', 'resnet50', 'alex1', 'alex2',
                  'sqnet1_0', 'sqnet1_1', 'densenet201', 'googlenet', 'inception', 'all']
 
     # ArgumentParser
@@ -32,6 +32,7 @@ def main():
                         help='save directory path', default="./feats", type=str)
     parser.add_argument("--net", help='DNN choice',
                         default="all", choices=dnns_list)
+    parser.add_argument("--exp", help='Experiment name')
     parser.add_argument("--load_model",
                         help='Path to the desired model to be tested of the architecture specified',
                         default=".")
@@ -42,9 +43,10 @@ def main():
     save_dir = args['save_dir']
     net = args['net']
     path = args['load_model']
+    exp_name = args['exp']
 
     # generate features/activations
-    generate_features(image_dir, save_dir, net, path)
+    generate_features(image_dir, save_dir, net, path, exp_name)
 
 
 if __name__ == "__main__":

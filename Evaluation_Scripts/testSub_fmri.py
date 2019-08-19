@@ -80,7 +80,7 @@ def evaluate(submission, targets, target_names=['EVC_RDMs', 'IT_RDMs']):
 
 # function that evaluates the RDM comparison.
 def test_fmri_submission_92(submit_file_dir, results_file_name):
-    target_file = '../Training_Data/92_Image_Set/target_fmri.mat'
+    target_file = '../data/Training_Data/92_Image_Set/target_fmri.mat'
     target = load(target_file)
     results_file = open(results_file_name + ".txt", "a+")
     # results_file = open("alexnet.txt", "w+")
@@ -126,7 +126,7 @@ def test_fmri_submission_92(submit_file_dir, results_file_name):
 
 # function that evaluates the RDM comparison.
 def test_fmri_submission_118(submit_file_dir, results_file_name):
-    target_file = '../Training_Data/118_Image_Set/target_fmri.mat'
+    target_file = '../data/Training_Data/118_Image_Set/target_fmri.mat'
     target = load(target_file)
     results_file = open(results_file_name + ".txt", "a+")
     # results_file = open("alexnet.txt", "w+")

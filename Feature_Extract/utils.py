@@ -89,7 +89,57 @@ def execute_model(image_dir, net_save_dir, model):
             print(feat.data.cpu().numpy().shape)
             feats[model.feat_list[i]] = feat.data.cpu().numpy()
         sio.savemat(save_path, feats)
-    print(str(feats.keys()))
+        print(str(feats.keys()))
+
+
+def load_model(model, model_path, optimizer=None, resume=False,
+               lr=None):
+    start_epoch = 0
+    checkpoint = torch.load(
+        model_path, map_location=lambda storage, loc: storage)
+    print('Loaded {}, epoch {}'.format(model_path, checkpoint['epoch']))
+    state_dict_ = checkpoint['state_dict']
+    state_dict = {}
+
+    # convert data_parallal to model
+    for k in state_dict_:
+        if k.startswith('network') and not k.startswith('module_list'):
+            state_dict[k[8:]] = state_dict_[k]
+        else:
+            state_dict[k] = state_dict_[k]
+    model_state_dict = model.state_dict()
+
+    # check loaded parameters and created model parameters
+    for k in state_dict:
+        if k in model_state_dict:
+            if state_dict[k].shape != model_state_dict[k].shape:
+                print('Skip loading parameter {}, required shape{}, '
+                      'loaded shape{}.'.format(
+                          k, model_state_dict[k].shape, state_dict[k].shape))
+                state_dict[k] = model_state_dict[k]
+        else:
+            print('Drop parameter {}.'.format(k))
+    for k in model_state_dict:
+        if not (k in state_dict):
+            print('No param {}.'.format(k))
+            state_dict[k] = model_state_dict[k]
+    model.load_state_dict(state_dict, strict=False)
+
+    # resume optimizer parameters
+    if optimizer is not None and resume:
+        if 'optimizer' in checkpoint:
+            optimizer.load_state_dict(checkpoint['optimizer'])
+            start_epoch = checkpoint['epoch']
+            start_lr = lr
+            for param_group in optimizer.param_groups:
+                param_group['lr'] = start_lr
+            print('Resumed optimizer with starting learning rate', start_lr)
+        else:
+            print('No optimizer parameters in checkpoint.')
+    if optimizer is not None:
+        return model, optimizer, start_epoch
+    else:
+        return model
 
 
 def run_model(image_dir, net_save_dir, model_name, model_path):
@@ -111,6 +161,5 @@ def run_model(image_dir, net_save_dir, model_name, model_path):
             print("================End of Model : ", model, "================")
     else:
         model = models[model_name]
-        checkpoint = torch.load(model_path)
-        model.load_state_dict(checkpoint['state_dict'])
+        model = load_model(model, model_path)
         execute_model(image_dir, net_save_dir, model)

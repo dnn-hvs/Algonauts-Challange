@@ -17,7 +17,7 @@ helpFunction()
    exit 1 # Exit script after printing help
 }
 
-while getopts "a:b:c:d" opt
+while getopts "a:b:c:d:" opt
 do
    case "$opt" in
       a ) parameterA="$OPTARG" ;;
@@ -32,6 +32,11 @@ done
 if [ -z "$parameterA" ] || [ -z "$parameterB" ] || [ -z "$parameterC" ] || [ -z "$parameterD" ]
 then
    echo "Some or all of the parameters are empty";
+   echo "Path to 92 image set: $parameterA"
+   echo "Path to 118 image set: $parameterB"
+   echo "Path to the model without foveation: $parameterC"
+   echo "Path to the model with foveation: $parameterD"
+
    helpFunction
 fi
 
@@ -52,17 +57,17 @@ printf "${GREEN}OK:${NC} Cleared\n"
 cd Feature_Extract
 # Create features
 printf "${BLUE}Info:${NC} Creating features for 118 image set with foveation\n"
-python3 generate_features.py --image_dir  $parameterA --save_dir  "./feats"  --net alex1 --load_model $parameterD 
+python3 generate_features.py --image_dir  $parameterA --save_dir  "./feats"  --net alexnet --load_model $parameterD --exp alex_foveate
 printf "${GREEN}OK:${NC} Features created for 118 image set with foveation\n"
 printf "${BLUE}Info:${NC} Creating features for 118 image set without foveation\n"
-python3 generate_features.py --image_dir  $parameterA --save_dir  "./feats"  --net alex2 --load_model $parameterC 
+python3 generate_features.py --image_dir  $parameterA --save_dir  "./feats"  --net alexnet --load_model $parameterC --exp alex_no_foveate
 printf "${GREEN}OK:${NC} Features created for 118 image set without foveation\n"
 
 printf "${BLUE}Info:${NC} Creating features for 92 image set with fovetion\n"
-python3 generate_features.py --image_dir  $parameterB --save_dir  "./feats"  --net alex1 --load_model $parameterD 
+python3 generate_features.py --image_dir  $parameterB --save_dir  "./feats"  --net alexnet --load_model $parameterD --exp alex_foveate
 printf "${GREEN}OK:${NC} Features created for 92 image set with foveation\n"
 printf "${BLUE}Info:${NC} Creating features for 92 image set without fovetion\n"
-python3 generate_features.py --image_dir  $parameterB --save_dir  "./feats"  --net alex2 --load_model $parameterC 
+python3 generate_features.py --image_dir  $parameterB --save_dir  "./feats"  --net alexnet --load_model $parameterC --exp alex_no_foveate
 printf "${GREEN}OK:${NC} Features created for 92 image set without foveation\n"
 
 # Create RDMs
@@ -82,5 +87,5 @@ python3 testSub_fmri.py ../Feature_Extract/rdms
 # Move the results into a directory
 if [ ! -d "Results" ]; then mkdir Results; fi
 mv *.txt Results
-mv Results/ReadMe_evaluation.txt .
+mv Results/ReadMe_Evaluation.txt .
 printf "${GREEN}OK:${NC} All done; hopefully\n\n\n"
