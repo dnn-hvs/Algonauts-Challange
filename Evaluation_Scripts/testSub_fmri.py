@@ -83,8 +83,6 @@ def test_fmri_submission_92(submit_file_dir, results_file_name):
     target_file = '../data/Training_Data/92_Image_Set/target_fmri.mat'
     target = load(target_file)
     results_file = open(results_file_name + ".txt", "a+")
-    # results_file = open("alexnet.txt", "w+")
-    i = 0
     results_file.write('=' * 20)
     results_file.write('Start of test run for 92 images')
     results_file.write('=' * 20)
@@ -128,9 +126,7 @@ def test_fmri_submission_92(submit_file_dir, results_file_name):
 def test_fmri_submission_118(submit_file_dir, results_file_name):
     target_file = '../data/Training_Data/118_Image_Set/target_fmri.mat'
     target = load(target_file)
-    results_file = open(results_file_name + ".txt", "a+")
-    # results_file = open("alexnet.txt", "w+")
-    i = 0
+    results_file = open(results_file_name + "_fmri.txt", "a+")
     results_file.write('=' * 20)
     results_file.write('Start of test run for 118 images')
     results_file.write('=' * 20)
@@ -180,5 +176,3 @@ if __name__ == '__main__':
         if len(dirs) == 0 and len(files) != 0:
             net = subdir.split('/')[-2]
             test_fmri_submission_92(subdir, net)
-
-    print(sys.argv[1] + '/118images_rdms/pearson')
