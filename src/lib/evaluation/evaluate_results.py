@@ -82,9 +82,10 @@ class Evaluate():
     # function that evaluates the RDM comparison.
 
     def write_excel(self, df, net_name):
-        if not os.path.exists("./results"):
-            os.mkdir("results")
-        df.to_excel("results/"+net_name+".xlsx")
+        all_path = "results/all"
+        best_path = "results/best"
+        utils.makedirs(all_path)
+        df.to_excel(os.path.join(all_path, net_name+".xlsx"))
         best_df = pd.DataFrame()
         # print(self.config.task, df.columns, sep=" : ")
         for col in df.columns:
@@ -94,12 +95,15 @@ class Evaluate():
             temp["Network Name"] = net_name
             temp["Layer Name"] = row.name
             best_df = best_df.append(temp)
-        best_df.to_excel("results/"+net_name+"_best.xlsx")
-        return
+        utils.makedirs(best_path)
+        best_df.to_excel(os.path.join(best_path, net_name+"_best.xlsx"))
+        return best_df
 
     def write_final_results(self, df):
-        writer = pd.ExcelWriter(
-            "results/Main_Results_"+self.config.task+".xlsx")
+        path = "results/final"
+        utils.makedirs(path)
+        writer = pd.ExcelWriter(os.path.join(path,
+                                             "Main_Results_"+self.config.task+".xlsx"))
         for index_substr in self.keys[self.config.task]:
             best = df.filter(like=index_substr, axis=0)
             best.to_excel(writer, sheet_name=index_substr)
@@ -163,8 +167,6 @@ class Evaluate():
         for subdir, dirs, files in os.walk(rdms_path):
             if len(dirs) == 0 and len(files) != 0:
                 if net != subdir.split('/')[-2] and not df.empty:
-                    print(net, subdir.split(
-                        '/')[-2], self.config.task, self.config.image_set, len(temp), sep=" : ")
                     best_df = best_df.append(temp)
                     df, temp = pd.DataFrame(), pd.DataFrame()
 
