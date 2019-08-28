@@ -1,11 +1,11 @@
-from networks.alexnet import AlexNet
-from networks.vgg import vgg11, vgg11_bn, vgg13, vgg13_bn, vgg16, vgg16_bn, vgg19, vgg19_bn
-from networks.resnet import resnet18, resnet34, resnet50, resnet101, resnet152
-from networks.squeezenet import SqueezeNet1_0, SqueezeNet1_1
-from networks.densenet import densenet121, densenet161, densenet169, densenet201
-from networks.alexnet import AlexNet
-from networks.inceptionv3 import inception_v3
-from networks.googlenet import googlenet
+from lib.networks.alexnet import AlexNet
+from lib.networks.vgg import vgg11, vgg11_bn, vgg13, vgg13_bn, vgg16, vgg16_bn, vgg19, vgg19_bn
+from lib.networks.resnet import resnet18, resnet34, resnet50, resnet101, resnet152
+from lib.networks.squeezenet import SqueezeNet1_0, SqueezeNet1_1
+from lib.networks.densenet import densenet121, densenet161, densenet169, densenet201
+from lib.networks.alexnet import AlexNet
+from lib.networks.inceptionv3 import inception_v3
+from lib.networks.googlenet import googlenet
 
 
 models = {

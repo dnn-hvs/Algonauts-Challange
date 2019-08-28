@@ -19,7 +19,7 @@ import scipy.io as sio
 import argparse
 import zipfile
 from tqdm import tqdm
-from utils import zip
+# from utils import zip
 
 
 class CreateRDMs():
@@ -129,6 +129,20 @@ class CreateRDMs():
             sio.savemat(RDM_filename_meg, rdm_meg)
 
     def run(self):
+
+        if self.config.fullblown:
+            for image_set in self.config.image_sets:
+                feats_dir = os.path.join(
+                    self.config.feat_dir, image_set+"images_feats")
+                for subdir, dirs, files in os.walk(feats_dir):
+                    print(subdir, dirs, files)
+                    if len(dirs) == 0 and len(files) != 0:
+                        save_dir = os.path.join(
+                            self.config.rdms_dir, self.config.distance, image_set+"images_rdms", subdir.split("/")[-1])
+                        if not os.path.exists(save_dir):
+                            os.makedirs(save_dir)
+                        self.create_rdm(save_dir, subdir)
+            return
 
         # creates save_dir
         save_dir = os.path.join(self.config.rdms_dir, self.config.distance)

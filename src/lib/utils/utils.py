@@ -16,6 +16,7 @@ import os
 from PIL import Image
 from collections import OrderedDict
 import h5py
+from lib.utils.networks_factory import models as models_list
 
 
 def zip(src, dst):
@@ -83,26 +84,34 @@ def load_model(model, model_path, optimizer=None, resume=False,
 
 def get_model(model_name):
     if model_name == "alexnet" or model_name == "sqnet1_0" or model_name == "sqnet1_1":
-        return models[model_name]()
+        return models_list[model_name]()
     else:
-        return models[model_name](pretrained=True)
+        print(model_name)
+        return models_list[model_name](pretrained=True)
 
 
 # loads the input files if in .mat format
 
-    def loadmat(matfile):
-        try:
-            f = h5py.File(matfile)
-        except (IOError, OSError):
-            return sio.loadmat(matfile)
-        else:
-            return {name: np.transpose(f.get(name)) for name in f.keys()}
+def loadmat(matfile):
+    try:
+        f = h5py.File(matfile)
+    except (IOError, OSError):
+        return sio.loadmat(matfile)
+    else:
+        return {name: np.transpose(f.get(name)) for name in f.keys()}
 
-    def loadnpy(npyfile):
-        return np.load(npyfile)
 
-    def load(data_file):
-        root, ext = os.path.splitext(data_file)
-        return {'.npy': loadnpy,
-                '.mat': loadmat
-                }.get(ext, loadnpy)(data_file)
+def loadnpy(npyfile):
+    return np.load(npyfile)
+
+
+def load(data_file):
+    root, ext = os.path.splitext(data_file)
+    return {'.npy': loadnpy,
+            '.mat': loadmat
+            }.get(ext, loadnpy)(data_file)
+
+
+def makedirs(path):
+    if not os.path.exists(path):
+        os.mkdir(path)
