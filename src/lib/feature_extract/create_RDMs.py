@@ -130,7 +130,7 @@ class CreateRDMs():
 
     def run(self):
 
-        if self.config.fullblown:
+        if self.config.fullblown or self.config.create_rdms:
             for image_set in self.config.image_sets:
                 feats_dir = os.path.join(
                     self.config.feat_dir, image_set+"images_feats")

@@ -190,7 +190,7 @@ class Evaluate():
                                       self.config.image_set+'images_rdms', self.config.distance))
 
     def run(self):
-        if self.config.fullblown:
+        if self.config.fullblown or self.config.evaluate_results:
             for task in constants.EVALUATE_DICT.keys():
 
                 main_df = pd.DataFrame()

@@ -46,14 +46,14 @@ class GenerateFeatures():
         print(str(feats.keys()))
 
     def get_model(self, model, load_model):
-        if self.config.load_model is not None or self.config.fullblown:
+        if self.config.load_model is not None or self.config.fullblown or self.config.generate_features:
             model = utils.get_model(model)
             return utils.load_model(model, load_model)
         else:
             return utils.get_model(self.config.arch)
 
     def run(self):
-        if self.config.fullblown:
+        if self.config.fullblown or self.config.generate_features:
             for image_set in self.config.image_sets:
                 print("Image Set: ", image_set)
                 self.config.image_dir = os.path.join("../data/Training_Data/" +
@@ -72,42 +72,3 @@ class GenerateFeatures():
                     model = self.get_model(model_name, model_pth)
                     self.execute_model(model, path)
             return
-
-        # if self.config.image_set == "all":
-        #     for image_set in ['92', '118']:
-        #         # Images Direcoty
-        #         self.config.image_dir = "../data/Training_Data/" + \
-        #             image_set+"_Image_Set"+image_set+"images"
-
-        #         if self.config.models_dir is not None:
-        #             models_list = glob.glob(self.config.models_dir + "/*.pth")
-        #             for model_pth in models_list:
-        #                 model_name = model_pth.split[constants.FORWARD_SLASH][-1].split("_")[
-        #                     0]
-        #                 model_save_dir = os.path.join(
-        #                     self.config.net_save_dir, model_name)
-        #                 if not os.path.exists(model_save_dir):
-        #                     os.makedirs(model_save_dir)
-
-        #                 model = self.get_model(model, path)
-        #                 self.execute_model(model, model_save_dir)
-
-        # if self.config.arch == "all":
-        #     for model in models.keys():
-        #         print("==============Start of Model : ",
-        #               model, "================")
-
-        #         if not os.path.exists(model_save_dir):
-        #             os.makedirs(model_save_dir)
-
-        #         model = self.get_model(model, path)
-        #         self.execute_model(model, model_save_dir)
-        #         print("================End of Model : ",
-        #               model, "================")
-        # else:
-        #     model = models[self.config.arch]
-        #     model_save_dir = os.path.join(
-        #         self.config.net_save_dir, self.config.arch)
-
-        #     model = self.get_model(model, path)
-        #     self.execute_model(model, model_save_dir)

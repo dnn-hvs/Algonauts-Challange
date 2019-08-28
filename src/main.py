@@ -8,9 +8,24 @@ from lib.utils.config import Config
 
 
 def main(config):
-    # GenerateFeatures(config).run()
-    # CreateRDMs(config).run()
-    Evaluate(config).run()
+    if config.fullblown:
+        GenerateFeatures(config).run()
+        CreateRDMs(config).run()
+        Evaluate(config).run()
+        return
+
+    if config.generate_features:
+        GenerateFeatures(config).run()
+        return
+
+    if config.create_rdms:
+        CreateRDMs(config).run()
+        return
+
+    if config.evaluate_results:
+        print(config.evaluate_results)
+        Evaluate(config).run()
+        return
 
 
 if __name__ == "__main__":

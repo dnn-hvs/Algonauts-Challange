@@ -12,7 +12,21 @@ class Config(object):
             description='generate DNN activations from a stimuli dir')
 
         self.parser.add_argument('--fullblown', action="store_true",
-                                 help='This will run for all the architectures.\n 1. Images dir : ../data/Training_data/')
+                                 help='This will run all combinations of tasks and image sets on the \
+                                    models given in --models_dir. This will genrate features, \
+                                    Create RDMs and Evaluate the results.')
+
+        self.parser.add_argument('--generate_features', action="store_true",
+                                 help='This will run all combinations of tasks and image sets on the \
+                                    models given in --models_dir. This will only genrate features.')
+
+        self.parser.add_argument('--create_rdms', action="store_true",
+                                 help='This will run all combinations of tasks and image sets on the \
+                                    models given in --models_dir. This will only create RDMs.')
+
+        self.parser.add_argument('--evaluate_results', action="store_true",
+                                 help='This will run all combinations of tasks and image sets on the \
+                                    models given in --models_dir. This will only evaluate results.')
 
         self.parser.add_argument("--models_dir",
                                  help='Path to the directory that contains all the best models of all architectures',
@@ -64,7 +78,7 @@ class Config(object):
         os.environ['CUDA_VISIBLE_DEVICES'] = opt.gpus_str
         opt.device = torch.device('cuda' if opt.gpus[0] >= 0 else 'cpu')
 
-        if opt.fullblown == True:
+        if opt.fullblown or opt.generate_features or opt.create_rdms or opt.evaluate_results:
             opt.image_sets = ['92', '118']
 
             return opt
