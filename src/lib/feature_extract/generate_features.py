@@ -52,6 +52,25 @@ class GenerateFeatures():
         else:
             return utils.get_model(self.config.arch)
 
+    def get_model_full_name(self, name):
+        split_name = name.split(constants.UNDER_SCORE)
+        model_name = split_name[0]
+        prev_combinations = split_name[1]
+        extension = split_name[2]
+        new_combinations = []
+
+        if prev_combinations[0] == "0" or prev_combinations[0] == "1":
+            new_combinations.append(
+                "fmri" if prev_combinations[0] == "0" else "meg")
+            new_combinations.append(
+                "early" if prev_combinations[1] == "0" else "late")
+            new_combinations.append(
+                "fov" if prev_combinations[2] == "0" else "nofov")
+            new_combinations.append(
+                "unfrozen" if prev_combinations[3] == "0" else "frozen")
+            return model_name + constants.UNDER_SCORE + constants.UNDER_SCORE.join(new_combinations) + constants.UNDER_SCORE+extension
+        return name
+
     def run(self):
         if self.config.fullblown or self.config.generate_features:
             for image_set in self.config.image_sets:
@@ -61,7 +80,8 @@ class GenerateFeatures():
                 models_list = glob.glob(self.config.models_dir + "/*.pth")
                 for model_pth in models_list:
                     pth_name = model_pth.split(constants.FORWARD_SLASH)[-1]
-                    model_name = pth_name.split("_")[0]
+                    pth_name = self.get_model_full_name(pth_name)
+                    model_name = pth_name.split(constants.UNDER_SCORE)[0]
                     subdir_name = pth_name.split(".")[0]
                     print("model_name: ", model_name,
                           " subdir_name: ", subdir_name)

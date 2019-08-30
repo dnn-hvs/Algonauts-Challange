@@ -3,7 +3,7 @@ SUBMIT_FMRI_FILE = 'submit_fmri.mat'
 SUBMIT_MEG_FILE = 'submit_meg.mat'
 
 FORWARD_SLASH = '/'
-
+UNDER_SCORE = "_"
 # Text file constants
 TXT_EXTENSION = '.txt'
 APPEND_MODE = 'a+'
