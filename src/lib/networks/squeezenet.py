@@ -7,6 +7,8 @@ import torch
 import torchvision
 import torch.nn as nn
 import numpy as np
+from collections import OrderedDict
+
 sqnet1_0_feat_list = ['conv1', 'ReLU1', 'maxpool1',
                       'fire2',
                       'fire3',
@@ -54,18 +56,17 @@ class SqueezeNet1_0(nn.Module):
 
     def forward(self, x):
         """Extract multiple feature maps."""
-        features = []
+        features = OrderedDict()
+        count = 1
         for name, layer in self.sqnet_feats._modules.items():
             x = layer(x)
-            print(name)
-            if sqnet1_0_feat_list[int(name)] in self.feat_list:
-                features.append(x)
+            features[str(count)+": "+layer.__class__.__name__] = (x)
+            count += 1
 
         for name, layer in self.sqnet_classifier._modules.items():
             x = layer(x)
-            print(name)
-            if sqnet1_0_classifier_list[int(name)] in self.feat_list:
-                features.append(x)
+            features[str(count)+": "+layer.__class__.__name__] = (x)
+            count += 1
         return features
 
 
@@ -92,13 +93,9 @@ class SqueezeNet1_1(nn.Module):
         features = []
         for name, layer in self.sqnet_feats._modules.items():
             x = layer(x)
-            print(name)
-            if sqnet1_1_feat_list[int(name)] in self.feat_list:
-                features.append(x)
+            features.append(x)
 
         for name, layer in self.sqnet_classifier._modules.items():
             x = layer(x)
-            print(name)
-            if sqnet1_1_classifier_list[int(name)] in self.feat_list:
-                features.append(x)
+            features.append(x)
         return features

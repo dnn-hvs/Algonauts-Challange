@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.utils.model_zoo as model_zoo
-
+from collections import OrderedDict
 
 __all__ = ['Inception3', 'inception_v3']
 
@@ -95,7 +95,7 @@ class Inception3(nn.Module):
                 nn.init.constant_(m.bias, 0)
 
     def forward(self, x):
-        features = []
+        features = OrderedDict()
         if self.transform_input:
             x_ch0 = torch.unsqueeze(x[:, 0], 1) * \
                 (0.229 / 0.5) + (0.485 - 0.5) / 0.5
@@ -106,60 +106,86 @@ class Inception3(nn.Module):
             x = torch.cat((x_ch0, x_ch1, x_ch2), 1)
         # N x 3 x 299 x 299
         x = self.Conv2d_1a_3x3(x)
-        features.append(x)
+        features["1: Conv2d_1a_3x3"] = x
         # N x 32 x 149 x 149
         x = self.Conv2d_2a_3x3(x)
+        features["2: Conv2d_2a_3x3"] = x
+
         # N x 32 x 147 x 147
         x = self.Conv2d_2b_3x3(x)
-        features.append(x)
+        features["3: Conv2d_2b_3x3"] = x
         # N x 64 x 147 x 147
         x = F.max_pool2d(x, kernel_size=3, stride=2)
+        features["4: max_pool2d"] = x
+
         # N x 64 x 73 x 73
         x = self.Conv2d_3b_1x1(x)
-        features.append(x)
+        features["5: Conv2d_3b_1x1"] = x
         # N x 80 x 73 x 73
         x = self.Conv2d_4a_3x3(x)
         # N x 192 x 71 x 71
-        features.append(x)
+        features["6: Conv2d_4a_3x3"] = x
         x = F.max_pool2d(x, kernel_size=3, stride=2)
+        features["7: max_pool2d"] = x
+
         # N x 192 x 35 x 35
         x = self.Mixed_5b(x)
+        features["8: Mixed_5b"] = x
+
         # N x 256 x 35 x 35
         x = self.Mixed_5c(x)
+        features["9: Mixed_5c"] = x
+
         # N x 288 x 35 x 35
         x = self.Mixed_5d(x)
-        features.append(x)
+        features["10: Mixed_5d"] = x
         # N x 288 x 35 x 35
         x = self.Mixed_6a(x)
+        features["11: Mixed_6a"] = x
+
         # N x 768 x 17 x 17
         x = self.Mixed_6b(x)
+        features["12: Mixed_6b"] = x
+
         # N x 768 x 17 x 17
         x = self.Mixed_6c(x)
+        features["13: Mixed_6c"] = x
+
         # N x 768 x 17 x 17
         x = self.Mixed_6d(x)
+        features["14: Mixed_6d"] = x
+
         # N x 768 x 17 x 17
         x = self.Mixed_6e(x)
-        features.append(x)
+        features["15: Mixed_6e"] = x
         # N x 768 x 17 x 17
         if self.training and self.aux_logits:
             aux = self.AuxLogits(x)
         # N x 768 x 17 x 17
         x = self.Mixed_7a(x)
+        features["16: Mixed_7a"] = x
+
         # N x 1280 x 8 x 8
         x = self.Mixed_7b(x)
+        features["17: Mixed_7b"] = x
+
         # N x 2048 x 8 x 8
         x = self.Mixed_7c(x)
         # N x 2048 x 8 x 8
-        features.append(x)
+        features["18: Mixed_7c"] = x
         # Adaptive average pooling
         x = F.adaptive_avg_pool2d(x, (1, 1))
+        features["19: adaptive_avg_pool2d"] = x
+
         # N x 2048 x 1 x 1
         x = F.dropout(x, training=self.training)
+        features["20: dropout"] = x
+
         # N x 2048 x 1 x 1
         x = x.view(x.size(0), -1)
         # N x 2048
         x = self.fc(x)
-        features.append(x)
+        features["21: fc"] = x
         # N x 1000 (num_classes)
         return features
 
