@@ -90,12 +90,15 @@ class SqueezeNet1_1(nn.Module):
 
     def forward(self, x):
         """Extract multiple feature maps."""
-        features = []
+        features = OrderedDict()
+        count = 1
         for name, layer in self.sqnet_feats._modules.items():
             x = layer(x)
-            features.append(x)
+            features[str(count)+": "+layer.__class__.__name__] = (x)
+            count += 1
 
         for name, layer in self.sqnet_classifier._modules.items():
             x = layer(x)
-            features.append(x)
+            features[str(count)+": "+layer.__class__.__name__] = (x)
+            count += 1
         return features
