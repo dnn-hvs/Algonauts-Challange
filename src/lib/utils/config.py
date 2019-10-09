@@ -38,7 +38,7 @@ class Config(object):
         self.parser.add_argument(
             '--rdms_dir', help='RDM directory path', default="./rdms", type=str)
 
-        RDM_distance_choice = ['pearson']
+        RDM_distance_choice = ['pearson', 'kernel']
 
         self.parser.add_argument('-d', '--distance', help='distance for RDMs',
                                  default="pearson", choices=RDM_distance_choice)
@@ -63,6 +63,8 @@ class Config(object):
         # Directories
         self.parser.add_argument('-id', '--image_dir', help='stimulus directory path',
                                  default=None, type=str)
+        self.parser.add_argument('--exp_id', help='Stores feats, rdms and results in this directory',
+                                 default=None, type=str)
 
     def parse(self, args=''):
         if args == '':
@@ -80,7 +82,9 @@ class Config(object):
 
         if opt.fullblown or opt.generate_features or opt.create_rdms or opt.evaluate_results:
             opt.image_sets = ['92', '118']
-
+            if opt.exp_id is not None:
+                opt.feat_dir = os.path.join(opt.exp_id, "feats")
+                opt.rdms_dir = os.path.join(opt.exp_id, "rdms")
             return opt
 
         if opt.image_set == "all":

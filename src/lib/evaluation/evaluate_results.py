@@ -82,8 +82,10 @@ class Evaluate():
     # function that evaluates the RDM comparison.
 
     def write_excel(self, df, net_name):
-        all_path = "results/all"
-        best_path = "results/best"
+        all_path = os.path.join(
+            self.config.exp_id, "results/all") if self.config.exp_id is not None else "results/all"
+        best_path = os.path.join(
+            self.config.exp_id, "results/best") if self.config.exp_id is not None else "results/best"
         utils.makedirs(all_path)
         df.to_excel(os.path.join(all_path, net_name+".xlsx"))
         best_df = pd.DataFrame()
@@ -100,7 +102,8 @@ class Evaluate():
         return best_df
 
     def write_final_results(self, df):
-        path = "results/final"
+        path = os.path.join(
+            self.config.exp_id, "results/final") if self.config.exp_id is not None else "results/final"
         utils.makedirs(path)
         writer = pd.ExcelWriter(os.path.join(path,
                                              "Main_Results_"+self.config.task+".xlsx"))
