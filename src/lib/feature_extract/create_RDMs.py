@@ -19,6 +19,9 @@ import scipy.io as sio
 import argparse
 import zipfile
 from tqdm import tqdm
+import scipy
+import torch.nn.functional as F
+import torch
 # from utils import zip
 
 
@@ -44,7 +47,6 @@ class CreateRDMs():
         num_layers = 0
         layer_list = []
         for key in feat:
-            print(key)
             if "__" in key:
                 continue
             else:
@@ -88,7 +90,7 @@ class CreateRDMs():
 
         # get number of layers and number of conditions(images) for RDM
         num_layers, layer_list, num_condns = self.get_layers_ncondns(feat_dir)
-        print(num_layers, layer_list, num_condns)
+        # print(num_layers, layer_list, num_condns)
         cwd = os.getcwd()
 
         # loops over layers and create RDM for each layer
@@ -114,6 +116,10 @@ class CreateRDMs():
                     # compute distance 1-Pearson's R
                     if self.config.distance == 'pearson':
                         RDM[i, j] = 1-np.corrcoef(feature_i, feature_j)[0][1]
+                    elif self.config.distance == 'kernel':
+                        dist = torch.dist(
+                            torch.tensor(feature_i.reshape(-1, 1)), torch.tensor(feature_j.reshape(-1, 1)))
+                        RDM[i, j] = 1-scipy.exp(- dist / 2*(0.03)**2).item()
                     else:
                         print(
                             "The", self.config.distance, "distance measure not implemented, please request through issues")
@@ -135,7 +141,6 @@ class CreateRDMs():
                 feats_dir = os.path.join(
                     self.config.feat_dir, image_set+"images_feats")
                 for subdir, dirs, files in os.walk(feats_dir):
-                    print(subdir, dirs, files)
                     if len(dirs) == 0 and len(files) != 0:
                         save_dir = os.path.join(
                             self.config.rdms_dir, self.config.distance, image_set+"images_rdms", subdir.split("/")[-1])
