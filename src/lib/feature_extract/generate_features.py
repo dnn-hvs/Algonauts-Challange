@@ -78,8 +78,12 @@ class GenerateFeatures():
         if self.config.fullblown or self.config.generate_features:
             for image_set in self.config.image_sets:
                 print("Image Set: ", image_set)
-                self.config.image_dir = os.path.join("../data/Training_Data/" +
-                                                     image_set+"_Image_Set", image_set+"images")
+                if not self.config.test_set:
+                    self.config.image_dir = os.path.join("../data/Training_Data/" +
+                                                         image_set+"_Image_Set", image_set+"images")
+                else:
+                    self.config.image_dir = os.path.join(
+                        "../data/Test_Data", image_set+"images")
                 models_list = glob.glob(self.config.models_dir + "/*.pth")
                 for model_pth in models_list:
                     pth_name = model_pth.split(constants.FORWARD_SLASH)[-1]

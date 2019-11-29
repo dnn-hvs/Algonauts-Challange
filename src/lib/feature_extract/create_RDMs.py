@@ -117,9 +117,15 @@ class CreateRDMs():
                     if self.config.distance == 'pearson':
                         RDM[i, j] = 1-np.corrcoef(feature_i, feature_j)[0][1]
                     elif self.config.distance == 'kernel':
+                        f_i = feature_i / (feature_i*feature_i).sum()**0.5
+                        f_j = feature_j / (feature_j*feature_j).sum()**0.5
+
                         dist = torch.dist(
-                            torch.tensor(feature_i.reshape(-1, 1)), torch.tensor(feature_j.reshape(-1, 1)))
-                        RDM[i, j] = 1-scipy.exp(- dist / 2*(0.03)**2).item()
+                            torch.tensor(f_i.reshape(-1, 1)), torch.tensor(f_j.reshape(-1, 1)))
+                        # print("Distance: ", dist)
+                        RDM[i, j] = 1-scipy.exp(- dist**2 / 2).item()
+                        # print("RDM[i, j]: ", RDM[i, j])
+
                     else:
                         print(
                             "The", self.config.distance, "distance measure not implemented, please request through issues")

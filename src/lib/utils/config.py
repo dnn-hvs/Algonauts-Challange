@@ -66,6 +66,9 @@ class Config(object):
         self.parser.add_argument('--exp_id', help='Stores feats, rdms and results in this directory',
                                  default=None, type=str)
 
+        self.parser.add_argument('--test_set', help='perform the operations only on the test data',
+                                 action="store_true")
+
     def parse(self, args=''):
         if args == '':
             opt = self.parser.parse_args()
@@ -81,7 +84,12 @@ class Config(object):
         opt.device = torch.device('cuda' if opt.gpus[0] >= 0 else 'cpu')
 
         if opt.fullblown or opt.generate_features or opt.create_rdms or opt.evaluate_results:
-            opt.image_sets = ['92', '118']
+            if opt.test_set:
+                opt.image_sets = ['78']
+
+            else:
+                opt.image_sets = ['92', '118']
+
             if opt.exp_id is not None:
                 opt.feat_dir = os.path.join(opt.exp_id, "feats")
                 opt.rdms_dir = os.path.join(opt.exp_id, "rdms")

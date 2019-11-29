@@ -27,6 +27,7 @@ EVALUATE_DICT = {
             'nc_avg_R2': (0.1048 + 0.0728)/2.
         },
         '78': {
+            'target_file': 'lib/target_files/target_fmri_challenge.mat',
             'nc_EVC_R2':  0.0640,
             'nc_IT_R2': 0.0647,
             'nc_avg_R2': (0.0640 + 0.0647)/2.
@@ -47,7 +48,7 @@ EVALUATE_DICT = {
             'nc_avg_R2': (0.3468+0.2265)/2.
         },
         '78': {
-            # 'target_file': 'lib/target_files/target_meg_118.mat',
+            'target_file': 'lib/target_files/target_meg_challenge.mat',
             'nc_early_R2': 0.3562,
             'nc_late_R2': 0.4452,
             'nc_avg_R2': (0.3562+0.4452)/2.
