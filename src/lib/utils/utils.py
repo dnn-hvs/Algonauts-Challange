@@ -114,4 +114,4 @@ def load(data_file):
 
 def makedirs(path):
     if not os.path.exists(path):
-        os.mkdir(path)
+        os.makedirs(path)
